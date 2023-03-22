@@ -1,0 +1,305 @@
+{% extends 'Mainpage/basic.html' %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Home - ArcDesk{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    {% block style %}
+    <style>
+        main {
+            background-image: url("{% static 'images/building3.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .features7 {
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .contents {
+            background-image: url("{% static 'images/building4.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+    {% if messages %}
+    <ul class="messages" id="message" style="position: absolute; margin-top: 110px;">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <main>
+        <div class="container">
+            <h1>We Are</h1>
+            <h1>Building</h1>
+            <h1>Your Future</h1><br>
+            <h5>ArcDesk is a distinguished consultancy organization providing engineering, architecture and project
+                management services. ArcDesk has a longlasting and illustrious track record spanning 60 years and 2000+
+                projects.</h5>
+            <br>
+            <a class="btn btn-lg btn-primary display-4" href="#">Get Started</a>
+        </div>
+    </main>
+    <section data-bs-version="5" class="features7 cid-sz56fQL1rV">
+        <div class="container">
+            <div class="col-12 col-lg-8 pb-5">
+                <h5 style="font-size: 40px;"
+                    class="mbr-section-subtitle mbr-fonts-style align-left mb-0 mt-2 display-5">One-Stop Solution for
+                    Architectural services like Vaasthu Floor Plans, RCC Structural Designs, 3D Exteriors, 3D Interiors,
+                    Bill of Materials (BOM)</h5>
+            </div>
+            <div class="row">
+                <div class="box">
+                    <i class="fa">&#xf013;</i><br><br>
+                    <h3>Processes</h3><br>
+                    <p style="font-size: 20px;">pre-design, schematic design, design development, construction
+                        documents, building permits, bidding and negotiation and construction administration.</p>
+                </div>
+                <div class="box">
+                    <i class="fa fa-palette"></i><br><br>
+                    <h3>Designs</h3><br>
+                    <p style="font-size: 20px;">Architectural design is a discipline that focuses on covering and
+                        meeting the needs and demands, to create living spaces, using certain tools and especially,
+                        creativity.</p>
+                </div>
+                <div class="box">
+                    <i class="fa fa-paper-plane"></i>
+                    <br><br>
+                    <h3>Plans</h3><br>
+                    <p style="font-size: 20px;">Plans are a common design drawing and technical architectural or
+                        engineering convention for graphic representation of architecture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="contents">
+        <div class="container">
+            <h3 style="text-align: center;">OVER FEATURES</h3>
+            <div class="contain">
+                <div class="box">
+                    <h1>05</h1>
+                    <h4>Happy Clients</h4>
+                </div>
+                <div class="box">
+                    <h1>10</h1>
+                    <h4>Projects</h4>
+                </div>
+                <div class="box">
+                    <h1>03</h1>
+                    <h4>Partners</h4>
+                </div>
+                <div class="box">
+                    <h1>15</h1>
+                    <h4>Professional Staff</h4>
+                </div>
+                <div class="box">
+                    <h1>02</h1>
+                    <h4>Successfull Brands</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="containers">
+        <section>
+            <h1>Our Client Says</h1>
+            <div class="cards">
+                <div class="card active" data-id="content1">
+                    <img src="{% static 'images/indian1.jpg' %}" alt="">
+                    <div>
+                        <h3>Aditi Patel</h3>
+                        <p>Hilltown Plaza</p>
+                    </div>
+                    <div class="gradient"></div>
+                </div>
+                <div class="card" data-id="content2">
+                    <img src="https://randomuser.me/api/portraits/men/78.jpg" alt="">
+                    <div>
+                        <h3>Rahul Singh</h3>
+                        <p>Arya Builders</p>
+                    </div>
+                    <div class="gradient"></div>
+                </div>
+                <div class="card" data-id="content3">
+                    <img src="{% static 'images/person2.jpg' %}" alt="">
+                    <div>
+                        <h3>Mahesh Gupta</h3>
+                        <p>Ganesh Rivera</p>
+                    </div>
+                    <div class="gradient"></div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="contentBox active" id="content1">
+                    <div class="text">
+                        <h2>Great collaboration</h2>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        <p>We had a great experience working with ArcDesk on our home renovation project. Their
+                            attention to detail and ability to listen to our needs and preferences was impressive. The
+                            end result is a beautiful, functional space that we absolutely love.</p>
+                        <p>We were blown away by the transformation of our space thanks to ArcDesk. They were able to
+                            take our vision and turn it into a reality, creating a space that is not only beautiful but
+                            also functional and practical for our daily needs. We couldn't be happier with the outcome.
+                        </p>
+                    </div>
+                </div>
+                <div class="contentBox" id="content2">
+                    <div class="text">
+                        <h2>It was a great experience!</h2>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+
+                        <p>From the first meeting, we knew that ArcDesk was the right choice for our commercial project.
+                            They have a deep understanding of the industry and were able to incorporate our specific
+                            requirements into the design seamlessly. We couldn't be happier with the final product.</p>
+                        <p>Our project was quite complex, but ArcDesk was able to navigate the challenges with ease.
+                            Their ability to communicate effectively and work collaboratively with all parties involved
+                            was truly impressive. We would definitely work with them again in the future.</p>
+                    </div>
+                </div>
+                <div class="contentBox" id="content3">
+                    <div class="text">
+                        <h2>
+                            Quickly and Efficiently</h2>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </span>
+                        <p>Working with ArcDesk was an absolute pleasure. Their innovative ideas and creative solutions
+                            were inspiring, and their professionalism and expertise made the entire process smooth and
+                            stress-free. We would highly recommend them to anyone looking for a talented and reliable
+                            architect.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+{% block script %}
+<script>
+    let card = document.querySelectorAll(".card");
+    let contentBox = document.querySelectorAll(".contentBox");
+
+    for (let i = 0; i < card.length; i++) {
+        card[i].addEventListener("mouseover", function () {
+            for (let i = 0; i < contentBox.length; i++) {
+                contentBox[i].className = "contentBox";
+            }
+            document.getElementById(this.dataset.id).className = "contentBox active";
+
+            for (let i = 0; i < card.length; i++) {
+                card[i].className = "card";
+            }
+            this.className = "card active";
+        });
+    }
+</script>
+{% endblock %}

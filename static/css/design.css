@@ -1,0 +1,33 @@
+main{
+    margin-top: 150px;
+    margin-bottom: 50px;
+}
+main .container .content{
+    height: auto;
+    display: flex;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+main .container .content .part1{
+    width: 30%;
+}
+main .container .content .part1 img{
+    height: 100%;
+    width: auto;
+}
+main .container .content .part2{
+    height: auto;
+    padding: 10px;
+    width: 70%;
+}
+@media screen and (max-width: 600px){
+    main .container .content .part1{
+        width: 100%;
+    }
+    main .container .content .part2{
+        width: 100%;
+    }
+}
