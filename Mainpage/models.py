@@ -7,6 +7,7 @@ class AccountData(models.Model):
     acc_id = models.IntegerField(default=0)
     email = models.EmailField(max_length=100,default="")
     acc_type = models.TextField(max_length=100,default="")
+    architech_fees = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.acc_id) + " - " + self.acc_type
@@ -45,3 +46,11 @@ class contactform(models.Model):
 
     def __str__(self):
         return self.email_id
+    
+class Temp_appointment(models.Model):
+    user_id = models.IntegerField(default=0)
+    appointment_date = models.DateField(default=datetime.date.today)
+    start_time = models.TextField(max_length=50,default="")
+    end_time = models.TextField(max_length=50,default="")
+    appointment_desc = models.TextField(max_length=500,default="")
+    architech_id = models.IntegerField(default=0)

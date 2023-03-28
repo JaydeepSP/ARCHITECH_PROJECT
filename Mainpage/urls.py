@@ -15,6 +15,10 @@ urlpatterns = [
     path('pending-app/',views.PendingAppointment,name="PendingAppointment"),
     path('edit-profile/',views.Edit_Profile,name='Edit_Profile'),
     path('contact/',views.ContactPage,name="ContactPage"),
+    path('main-user-info/<id>',views.MainUserInfo,name="MainUserInfo"),
+    path('checkout/',views.Checkout,name='Checkout'),
+    path('success/',views.success_page,name="success_page"),
+    path('cancle/',views.cancle_page,name="cancle_page"),
     path('logout/',views.Logout,name="Logout"),
 ]
 if settings.DEBUG:

@@ -174,7 +174,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Design Content</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/checkout/" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <form action="/appointments/" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="" class="form-label">Appointment Date</label>
@@ -195,10 +195,9 @@
                     </div>
                     <div class="modal-footer">
                         <input type="number" value="{{user_id}}" name="user_id" hidden id="">
-                        <input type="number" name="architech_fees" value="{{fees}}" id="" hidden>
                         <button type="button" class="btn btn-secondary" style="padding: 10px;"
                             data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" style="padding: 10px;">BOOK</button>
+                        <button type="submit" class="btn btn-primary" style="padding: 10px;">POST</button>
                     </div>
                 </form>
             </div>
@@ -229,7 +228,6 @@
         {% endfor %}
     </div>
     <div class="main">
-        {% if account_type == "Architech" %}
         <div class="myorder">
             <h3 style="text-align: center;">Designs</h3>
             {% if designs %}
@@ -255,7 +253,6 @@
         <div class="appointment-btn">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postmodal">Book Appointment</button>
         </div>
-        {% endif %}
         {% endif %}
     </div>
     {% endblock %}

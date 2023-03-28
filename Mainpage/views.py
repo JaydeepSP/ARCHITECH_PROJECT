@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import AccountData,DesignData,AppointmentData,contactform
-
+from .models import AccountData,DesignData,AppointmentData,contactform,Temp_appointment
+import stripe
 # Create your views here.
 
 def Homepage(request):
@@ -131,8 +131,21 @@ def UserInformation(request,id):
         designs = DesignData.objects.filter(user_id = id).values()
         type_data = AccountData.objects.filter(acc_id = id).values()[0]
         account_type = type_data["acc_type"]
-        appointment = AppointmentData()
-        return render(request,"Mainpage/user-info.html",{"type":type,"accounts_data":user_data,"account_type":account_type,"designs":designs,"user_id":id})
+        fees = type_data["architech_fees"]
+        return render(request,"Mainpage/user-info.html",{"type":type,"accounts_data":user_data,"account_type":account_type,"designs":designs,"user_id":id,"fees":fees})
+    else:
+        return redirect("/login/")
+
+def MainUserInfo(request,id):
+    if request.user.is_authenticated==True:
+        accout_data = AccountData.objects.filter(acc_id = request.user.id).values()[0]
+        type = accout_data["acc_type"]
+        user_data = User.objects.filter(id = id).values()
+        designs = DesignData.objects.filter(user_id = id).values()
+        type_data = AccountData.objects.filter(acc_id = id).values()[0]
+        account_type = type_data["acc_type"]
+        fees = type_data["architech_fees"]
+        return render(request,"Mainpage/main-user-info.html",{"type":type,"accounts_data":user_data,"account_type":account_type,"designs":designs,"user_id":id,"fees":fees})
     else:
         return redirect("/login/")
 
@@ -177,25 +190,6 @@ def Appointments(request):
     if request.user.is_authenticated:
         accout_data = AccountData.objects.filter(acc_id = request.user.id).values()[0]
         type = accout_data["acc_type"]
-        if request.method == "POST":
-            appointment = AppointmentData()
-            app_date = request.POST.get("app_date")
-            start_time = request.POST.get("start_time")
-            end_time = request.POST.get("end_time")
-            app_desc = request.POST.get("design_desc")
-            architech_id = request.POST.get("user_id")
-            user_id = request.user.id
-            full_name = User.objects.filter(id = architech_id).values()[0]["first_name"] + " " + User.objects.filter(id = architech_id).values()[0]["last_name"]
-            appointment.appointment_date = app_date
-            appointment.start_time = start_time
-            appointment.end_time = end_time
-            appointment.appointment_desc = app_desc
-            appointment.architech_id = architech_id
-            appointment.user_id = user_id
-            appointment.architech_name = full_name
-            appointment.consumer_name = request.user.first_name + " " + request.user.last_name
-            appointment.save()
-            return redirect("/appointments/")
         appointment_data = AppointmentData.objects.filter(user_id = request.user.id).all().values()
         return render(request,"Mainpage/appointment.html",{"appointment_data":appointment_data,"type":type})
     else:
@@ -235,6 +229,71 @@ def ContactPage(request):
         contactforms = contactform(email_id = email,message=message)
         contactforms.save()
     return render(request,"Mainpage/contact.html")
+
+stripe.api_key = 'sk_test_51MedHmSHJDFuPL5cnRItHVU94xOAzKltL5vuoADjGI0wZfVNRtCwU3I3eKgvtQUF0z3w2yl5IuQ5rRZcOs9m2ytj00YSZRJhjw'
+def Checkout(request):
+    if request.user.is_authenticated:
+        temp_data = Temp_appointment()
+        if request.method == "POST":
+            app_date = request.POST.get("app_date")
+            start_time = request.POST.get("start_time")
+            end_time = request.POST.get("end_time")
+            app_desc = request.POST.get("design_desc")
+            architech_id = request.POST.get("user_id")
+            appointment_fees = int(request.POST.get("architech_fees"))
+            user_id = request.user.id
+            temp_data.user_id = user_id
+            temp_data.appointment_date = app_date
+            temp_data.start_time = start_time
+            temp_data.end_time = end_time
+            temp_data.appointment_desc = app_desc
+            temp_data.architech_id = architech_id
+            temp_data.save()
+            full_name = User.objects.filter(id = architech_id).values()[0]["first_name"] + " " + User.objects.filter(id = architech_id).values()[0]["last_name"]
+            session = stripe.checkout.Session.create(
+            line_items=[{
+              'price_data': {
+                'currency': 'inr',
+                'product_data': {
+                  'name': full_name,
+                },
+                'unit_amount': int(appointment_fees*100),
+              },
+              'quantity': 1,
+            }],
+            mode='payment',
+            success_url='http://127.0.0.1:8000/success',
+            cancel_url='http://127.0.0.1:8000/cancel',
+            )
+            return redirect(session.url, code=303)
+    else:
+        return redirect("/login/")
+
+
+def success_page(request):
+    user = request.user
+    accout_data = AccountData.objects.filter(acc_id = request.user.id).values()[0]
+    type = accout_data["acc_type"]
+    temp_data = Temp_appointment.objects.filter(user_id = user.id).values()[0]
+    appointment = AppointmentData()
+    user_id = request.user.id
+    appointment.appointment_date = temp_data["appointment_date"]
+    appointment.start_time = temp_data["start_time"]
+    appointment.end_time = temp_data["end_time"]
+    appointment.appointment_desc = temp_data["appointment_desc"]
+    appointment.architech_id = temp_data["architech_id"]
+    appointment.user_id = user_id
+    full_name = User.objects.filter(id = temp_data["architech_id"]).values()[0]["first_name"] + " " + User.objects.filter(id = temp_data["architech_id"]).values()[0]["last_name"]
+    appointment.architech_name = full_name
+    appointment.consumer_name = request.user.first_name + " " + request.user.last_name
+    appointment.save()
+    Temp_appointment.objects.filter(user_id = user.id).delete()
+    return render(request,"Mainpage/success.html",{"type":type})
+
+def cancle_page(request):
+    accout_data = AccountData.objects.filter(acc_id = request.user.id).values()[0]
+    type = accout_data["acc_type"]
+    return render(request,"Mainpage/cancle.html",{"type":type})
 
 def Logout(request):
     logout(request)
