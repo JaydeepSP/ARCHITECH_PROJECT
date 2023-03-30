@@ -240,7 +240,7 @@ def Checkout(request):
             end_time = request.POST.get("end_time")
             app_desc = request.POST.get("design_desc")
             architech_id = request.POST.get("user_id")
-            appointment_fees = int(request.POST.get("architech_fees"))
+            appointment_fees = int(request.POST.get("architech_fees")) / 2
             user_id = request.user.id
             temp_data.user_id = user_id
             temp_data.appointment_date = app_date
