@@ -1,7 +1,6 @@
 from django.db import models
-import django
 import datetime
-# Create your models here.
+
 
 class AccountData(models.Model):
     acc_id = models.IntegerField(default=0)
@@ -53,4 +52,17 @@ class Temp_appointment(models.Model):
     start_time = models.TextField(max_length=50,default="")
     end_time = models.TextField(max_length=50,default="")
     appointment_desc = models.TextField(max_length=500,default="")
+    architech_id = models.IntegerField(default=0)
+
+
+class PaymentData(models.Model):
+    payment_id = models.AutoField
+    appointment_id = models.IntegerField(default=0)
+    user_id = models.IntegerField(default=0)
+    architech_id = models.IntegerField(default=0)
+    payment = models.IntegerField(default=0)
+
+class TempPayment(models.Model):
+    amount = models.IntegerField(default=0)
+    app_id = models.IntegerField(default=0)
     architech_id = models.IntegerField(default=0)

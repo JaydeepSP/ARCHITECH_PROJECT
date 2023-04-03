@@ -59,7 +59,7 @@
                     <h5>End Time: {{i.end_time}}</h5>
                 </div><br>
                 <h5 style="text-align: center;">status:
-                    {% if i.status == "Approved" %}
+                    {% if i.status == "Approved" or i.status == "Payment Successfull" %}
                     <span style="color: green;">{{i.status}}</span>
                     {% elif i.status == "Cancled" %}
                     <span style="color: red;">{{i.status}}</span>
@@ -72,6 +72,23 @@
                 <p style="text-align: center;">
                     {{i.appointment_desc}}
                 </p>
+                {% if i.status == "Payment-Pending" %}
+                {% for j in payment_data %}
+                {% if j.user_id == user.id and j.appointment_id == i.id %}
+                <h5 style="text-align: center;">Payment:
+                    <span style="color: green;">₹ {{j.payment}}</span>
+                </h5><br>
+                <form action="/payment-checkout/" style="display: flex; justify-content: center; align-items: center;" method="post">{% csrf_token %}
+                    <input type="hidden" name="amount" id="" value="{{j.payment}}">
+                    <input type="hidden" name="app_id" id="" value="{{i.id}}">
+                    <input type="hidden" name="arc_id" value="{{i.architech_id}}" id="">
+                    <input type="hidden" value="{{i.architech_name}}" name="architech_name" id="">
+                    <button type="submit" value="{{i.id}} Approved" name="" class="btn btn-success"
+                            style="padding: 10px;">Pay</button>
+                </form>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
             </div>
             {% endfor %}
 

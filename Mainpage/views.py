@@ -2,9 +2,9 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from .models import AccountData,DesignData,AppointmentData,contactform,Temp_appointment
+from .models import AccountData,DesignData,AppointmentData,contactform,Temp_appointment,PaymentData,TempPayment
 import stripe
-# Create your views here.
+
 
 def Homepage(request):
     if request.method == "POST":
@@ -189,9 +189,10 @@ def All_User(request):
 def Appointments(request):
     if request.user.is_authenticated:
         accout_data = AccountData.objects.filter(acc_id = request.user.id).values()[0]
+        payment_data = PaymentData.objects.all()
         type = accout_data["acc_type"]
         appointment_data = AppointmentData.objects.filter(user_id = request.user.id).all().values()
-        return render(request,"Mainpage/appointment.html",{"appointment_data":appointment_data,"type":type})
+        return render(request,"Mainpage/appointment.html",{"appointment_data":appointment_data,"type":type,"payment_data":payment_data})
     else:
         return redirect("/login/")
 
@@ -206,6 +207,30 @@ def PendingAppointment(request):
             AppointmentData.objects.filter(id = data[0]).update(status = data[1])
             return redirect("/pending-app/")
         return render(request,"Mainpage/pending-app.html",{"appointment_data":appointments,"type":type})
+    else:
+        return redirect("/login/")
+    
+def Contract_Status(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            id = request.POST.get("id")
+            data = id.split(" ")
+            AppointmentData.objects.filter(id = data[0]).update(status = data[1])
+            return redirect("/pending-app/")
+    else:
+        return redirect("/login/")
+    
+def PaymentManager(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            appointment_id = int(request.POST.get("appointment_id"))
+            user_id = int(request.POST.get("user_id"))
+            architech_id = int(request.POST.get("architech_id"))
+            payment = request.POST.get("payment")
+            payments_data = PaymentData(appointment_id = appointment_id,user_id = user_id,architech_id = architech_id,payment = payment)
+            payments_data.save()
+            AppointmentData.objects.filter(id = appointment_id).update(status = "Payment-Pending")
+            return redirect("/pending-app/")
     else:
         return redirect("/login/")
 
@@ -240,7 +265,7 @@ def Checkout(request):
             end_time = request.POST.get("end_time")
             app_desc = request.POST.get("design_desc")
             architech_id = request.POST.get("user_id")
-            appointment_fees = int(request.POST.get("architech_fees")) / 2
+            appointment_fees = int(request.POST.get("architech_fees"))
             user_id = request.user.id
             temp_data.user_id = user_id
             temp_data.appointment_date = app_date
@@ -268,7 +293,45 @@ def Checkout(request):
             return redirect(session.url, code=303)
     else:
         return redirect("/login/")
+    
 
+def PaymentCheckout(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            amount = int(request.POST.get("amount"))/2
+            app_id = request.POST.get("app_id")
+            arc_id = request.POST.get("arc_id")
+            temp_payment = TempPayment(amount = amount,app_id = app_id,architech_id = arc_id)
+            temp_payment.save()
+            architech_name = request.POST.get("architech_name")
+            session = stripe.checkout.Session.create(
+            line_items=[{
+              'price_data': {
+                'currency': 'inr',
+                'product_data': {
+                  'name': architech_name,
+                },
+                'unit_amount': int(amount*100),
+              },
+              'quantity': 1,
+            }],
+            mode='payment',
+            success_url='http://127.0.0.1:8000/paymentsuccess',
+            cancel_url='http://127.0.0.1:8000/cancel',
+            )
+            return redirect(session.url, code=303)
+    else:
+        return redirect("/login/")
+
+def Paymentsuccess(request):
+    accout_data = AccountData.objects.filter(acc_id = request.user.id).values()[0]
+    type = accout_data["acc_type"]
+    temp_data = TempPayment.objects.values()[0]
+    payment_data = PaymentData(appointment_id = temp_data["app_id"],user_id = request.user.id,architech_id = temp_data["architech_id"],payment = temp_data["amount"])
+    payment_data.save()
+    AppointmentData.objects.filter(id = temp_data["app_id"]).update(status = "Payment Successfull")
+    TempPayment.objects.all().delete()
+    return render(request,"Mainpage/success.html",{"type":type})
 
 def success_page(request):
     user = request.user
@@ -276,6 +339,7 @@ def success_page(request):
     type = accout_data["acc_type"]
     temp_data = Temp_appointment.objects.filter(user_id = user.id).values()[0]
     appointment = AppointmentData()
+    appointments_data = AppointmentData.objects.filter()
     user_id = request.user.id
     appointment.appointment_date = temp_data["appointment_date"]
     appointment.start_time = temp_data["start_time"]

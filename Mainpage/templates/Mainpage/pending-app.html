@@ -69,9 +69,9 @@
                     <h5>End Time: {{i.end_time}}</h5>
                 </div><br>
                 <h5 style="text-align: center;">status:
-                    {% if i.status == "Approved" %}
+                    {% if i.status == "Approved" or i.status == "Completed" or i.status == "Payment Successfull" %}
                     <span style="color: green;">{{i.status}}</span>
-                    {% elif i.status == "Cancled" %}
+                    {% elif i.status == "Cancled" or i.status == "Cancle-Contract" %}
                     <span style="color: red;">{{i.status}}</span>
                     {% else %}
                     <span style="color: yellowgreen;">{{i.status}}</span>
@@ -82,13 +82,35 @@
                 <p style="text-align: center;">
                     {{i.appointment_desc}}
                 </p>
-                {% if i.status != "Approved" and i.status != "Cancled" %}
+                {% if i.status != "Approved" and i.status != "Cancled" and i.status != "Cancle-Contract" and i.status != "Completed" and i.status != "Payment-Pending" and i.status != "Payment Successfull" %}
                 <form action="/pending-app/" method="post">{% csrf_token %}
                     <div class="app-btn">
                         <button type="submit" value="{{i.id}} Cancled" name="id" class="btn btn-danger"
                             style="padding: 10px;">Cancle</button>
                         <button type="submit" value="{{i.id}} Approved" name="id" class="btn btn-success"
                             style="padding: 10px;">Approve</button>
+                    </div>
+                </form>
+                {% endif %}
+                {% if i.status == "Approved" %}
+                <form action="/contract-status/" method="post">{% csrf_token %}
+                    <div class="app-btn">
+                        <button type="submit" value="{{i.id}} Cancle-Contract" name="id" class="btn btn-danger"
+                            style="padding: 10px;">Cancle Contract</button>
+                        <button type="submit" value="{{i.id}} Completed" name="id" class="btn btn-success"
+                            style="padding: 10px;">Complete Contract</button>
+                    </div>
+                </form>
+                {% endif %}
+                {% if i.status == "Completed" %}
+                <form action="/add-payment/" style="display: flex; justify-content: center; align-items: center;" method="post">{% csrf_token %}
+                    <div class="payment-details" style="text-align: center; display: flex;">
+                        <input type="number" name="appointment_id" id="" value="{{i.id}}" hidden>
+                        <input type="number" name="user_id" id="" value="{{i.user_id}}" hidden> 
+                        <input type="number" name="architech_id" id="architech_id" value="{{i.architech_id}}" hidden>
+                        <input type="number" class="form-control" name="payment" style="width: auto;" placeholder="Add Amount" id="" required>
+                        <button type="submit" class="btn btn-success"
+                                style="margin-left: 10px; padding: 10px;">Add</button>
                     </div>
                 </form>
                 {% endif %}

@@ -16,10 +16,14 @@ urlpatterns = [
     path('edit-profile/',views.Edit_Profile,name='Edit_Profile'),
     path('contact/',views.ContactPage,name="ContactPage"),
     path('main-user-info/<id>',views.MainUserInfo,name="MainUserInfo"),
-    path('checkout/',views.Checkout,name='Checkout'),
+    path('checkout/',views.Checkout,name='Checkout'), # type: ignore
     path('success/',views.success_page,name="success_page"),
     path('cancle/',views.cancle_page,name="cancle_page"),
     path('logout/',views.Logout,name="Logout"),
+    path('contract-status/',views.Contract_Status,name="Contract_Status"), # type: ignore
+    path('add-payment/',views.PaymentManager,name="PaymentManager"), # type: ignore
+    path('paymentsuccess/',views.Paymentsuccess,name="Paymentsuccess"),
+    path('payment-checkout/',views.PaymentCheckout,name="PaymentCheckout"), # type: ignore
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root = settings.STATICFILES_DIRS)
