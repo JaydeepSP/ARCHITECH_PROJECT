@@ -230,6 +230,11 @@
     </div>
     <div class="main">
         {% if account_type == "Architech" %}
+        {% if type == "Consumer" %}
+        <div class="appointment-btn">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postmodal">Book Appointment</button>
+        </div>
+        {% endif %}
         <div class="myorder">
             <h3 style="text-align: center;">Designs</h3>
             {% if designs %}
@@ -251,11 +256,7 @@
             <h5>No any Designs yet</h5>
             {% endif %}
         </div>
-        {% if type == "Consumer" %}
-        <div class="appointment-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postmodal">Book Appointment</button>
-        </div>
-        {% endif %}
+       
         {% endif %}
     </div>
     {% endblock %}

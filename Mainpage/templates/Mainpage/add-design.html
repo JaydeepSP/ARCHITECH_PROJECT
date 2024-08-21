@@ -13,13 +13,21 @@
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     {% block style %}
     <link rel="stylesheet" href="{% static 'css/consultation.css' %}">
+    <style>
+        .jd{
+            color:red;
+            font-size:10px;
+        }
+    </style>
     {% endblock %}
 </head>
 
 <body>
     {% block body %}
-    {% if messages %}
-    <ul class="messages" id="message">
+    
+    <main>
+        {% if messages %}
+    <ul class="messages" id="message" style="margin-top: 100px;">
         {% for message in messages %}
         <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
             {{message}}
@@ -28,7 +36,6 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <main>
         <div class="modal fade" id="postmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -40,6 +47,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="" class="form-label">Design Image</label>
+                                <span class="jd">**please select image having less than 2 Mb of size.</span>
                                 <input type="file" class="form-control" name="design_img" id="id_design_img" required>
                             </div>
                             <div class="mb-3">
@@ -68,6 +76,7 @@
             <div class="post-btn">
                 <button class="custom-btn btn-3" data-bs-toggle="modal" data-bs-target="#postmodal"><span>Add
                         Design</span></button>
+                
             </div>
 
             <!-- <div class="content">

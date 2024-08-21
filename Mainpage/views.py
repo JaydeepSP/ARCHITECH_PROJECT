@@ -81,6 +81,7 @@ def AddDesignPage(request):
             if len(request.FILES) != 0:
                 design_data.design_img = request.FILES['design_img']
             design_data.save()
+            messages.success(request,"Your Design is added successfully.")
         customer_data = AccountData.objects.filter(acc_type = "Consumer").all().values()
         users_data = []
         for i in customer_data:
@@ -92,6 +93,7 @@ def AddDesignPage(request):
             mydic["email"] = user_data["username"]
             mydic["mobile"] = user_data["email"]
             users_data.append(mydic)
+            
         return render(request,"Mainpage/add-design.html",{"type":type,"customer_data":users_data})
     else:
         messages.warning(request,"First login after then book the consulatation")
@@ -253,6 +255,7 @@ def ContactPage(request):
         message = request.POST.get("message")
         contactforms = contactform(email_id = email,message=message)
         contactforms.save()
+        messages.success(request,"Your contact request is sent successfully.\nWe will make contact to you shortly!!")
     return render(request,"Mainpage/contact.html")
 
 stripe.api_key = 'sk_test_51MedHmSHJDFuPL5cnRItHVU94xOAzKltL5vuoADjGI0wZfVNRtCwU3I3eKgvtQUF0z3w2yl5IuQ5rRZcOs9m2ytj00YSZRJhjw'

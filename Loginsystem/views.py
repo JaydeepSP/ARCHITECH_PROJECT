@@ -93,7 +93,7 @@ def ForgetPage(request):
             email_receiver = email
             subject = "OTP"
             body = """
-            Welcome to ArcDesk 
+            To change your password  
             Your OTP is - {}""".format(otp_generate)
             em = EmailMessage()
             em['from'] = email_sender
